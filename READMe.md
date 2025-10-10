@@ -3,7 +3,7 @@
 This is a backend API for tracking medications nearing expiration.
 Built with Django Rest Framework, it allows users to manage medication records, view upcoming expirations, and send alerts for drugs expiring within a specified period.
 
-# Features
+## Features
  
 •	Add, update, and delete medications
 
@@ -17,7 +17,7 @@ Built with Django Rest Framework, it allows users to manage medication records, 
 
 •	Deployed on AWS EC2
 
-# Tech Stack
+## Tech Stack
  
 •	Backend: Django / Django REST Framework
 
@@ -29,15 +29,15 @@ Built with Django Rest Framework, it allows users to manage medication records, 
 
 •	Version Control: Git & GitHub
 ________________________________________
-# Installation and Setup
+## Installation and Setup
 
-1. Clone the repository
+### 1. Clone the repository
 
    git clone https://github.com/doseman01/medexpiry-tracker-api.git
 
    cd medexpiry-tracker-api
 
-2. Create and activate a virtual environment
+### 2. Create and activate a virtual environment
 
    python3 -m venv venv
 
@@ -45,19 +45,19 @@ ________________________________________
 
    On Windows: venv\Scripts\activate
 
-3. Install dependencies
+### 3. Install dependencies
 
    pip install -r requirements.txt
 
-4. Apply migrations
+### 4. Apply migrations
 
    python manage.py migrate
 
-5. Run the development server
+### 5. Run the development server
    python manage.py runserver
 ________________________________________
 
-# API Endpoints
+## API Endpoints
 
   Method	Endpoint	Description
 
@@ -71,7 +71,7 @@ ________________________________________
 
   DELETE	/api/medications/{id}/	Delete a medication
 ________________________________________
-# Deployment
+## Deployment
 
 Deployed on AWS EC2 with environment variables stored securely.
 
@@ -79,7 +79,7 @@ The public subnet can act as a bastion host to allow ssh connection to the datab
 
 The database hosted on a private subnet can connect to the internet via a NAT Gateway for updates and security but not vice-versa.
 ________________________________________
-# Author
+## Author
 
 Dosunmu Qudus
 
@@ -89,7 +89,7 @@ Cloud & DevOps Enthusiast | Pharmacist | Backend Developer
 
 •	GitHub
 ________________________________________
-# License
+## License
 
 This project is open-source and available under the MIT License.
 
