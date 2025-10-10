@@ -1,139 +1,97 @@
-# 💊 Medication Expiry Tracking System
+# MedExpiry Tracker API
 
-This is a simple Django-based application that allows users to keep track of medications and their expiry dates. The goal is to help prevent the use of expired drugs by making it easy to monitor and manage inventory.
+This is a backend API for tracking medications nearing expiration.
+Built with Django Rest Framework, it allows users to manage medication records, view upcoming expirations, and send alerts for drugs expiring within a specified period.
 
----
+# Features
+ 
+•	Add, update, and delete medications
 
-## 📁 Project Structure Setup (Day 2)
+•	View medications expiring within the next n days
 
-### ✅ Requirements
+•	Automatic alerts for near-expiry medications
 
-Before starting, ensure you have the following installed:
+•	RESTful API built using Django REST Framework
 
-- Python 3.12+
-- pip
-- Virtualenv (optional but recommended)
+•	Supports filtering by expiry date
 
----
+•	Deployed on AWS EC2
 
-## 🏗️ Step-by-Step Setup
+# Tech Stack
+ 
+•	Backend: Django / Django REST Framework
 
-### 1. Create a Virtual Environment
+•	Database: MySQL (hosted on AWS RDS or EC2)
 
-python3 -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
-2. Install Django
-pip install django
+•	Hosting: AWS EC2
 
-3. Start a Django Project
-django-admin startproject medication_expiry_tracker
-cd medication_expiry_tracker
+•	Monitoring: CloudWatch / Prometheus
 
-4. Create an App
-python manage.py startapp medications
+•	Version Control: Git & GitHub
+________________________________________
+# Installation and Setup
 
-5. Register App in settings.py
-In medication_expiry_tracker/settings.py, add the app:
+1. Clone the repository
 
-INSTALLED_APPS = [
-    ...
-    'medications',
-]
+   git clone https://github.com/doseman01/medexpiry-tracker-api.git
 
-6. Create the Medication Model
-In medications/models.py:
+   cd medexpiry-tracker-api
 
-from django.db import models
+2. Create and activate a virtual environment
 
-class Medication(models.Model):
-    name = models.CharField(max_length=255)
-    expiry_date = models.DateField()
+   python3 -m venv venv
 
-    def __str__(self):
-        return self.name
+   source venv/bin/activate   
 
-7. Make Migrations
-python manage.py makemigrations
-python manage.py migrate
+   On Windows: venv\Scripts\activate
 
-8. Create a View
-In medications/views.py:
+3. Install dependencies
 
-from django.shortcuts import render
-from .models import Medication
+   pip install -r requirements.txt
 
-def medication_list(request):
-    medications = Medication.objects.all()
-    return render(request, 'medications/medication_list.html', {'medications': medications})
+4. Apply migrations
 
-9. Configure URLs
-In medications/urls.py:
+   python manage.py migrate
 
-from django.urls import path
-from . import views
+5. Run the development server
+   python manage.py runserver
+________________________________________
 
-urlpatterns = [
-    path('', views.medication_list, name='medication_list'),
-]
-In medication_expiry_tracker/urls.py:
+# API Endpoints
 
-from django.contrib import admin
-from django.urls import path, include
+  Method	Endpoint	Description
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('medications/', include('medications.urls')),
-]
-10. Create Template Directory
-Inside medications/, create a folder named templates/medications/ and add medication_list.html:
+  GET	/api/medications/	List all medications
 
-<!-- medications/templates/medications/medication_list.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Medication List</title>
-</head>
-<body>
-    <h1>Medications</h1>
-    <ul>
-        {% for med in medications %}
-            <li>{{ med.name }} - Expires on: {{ med.expiry_date }}</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
-Also, ensure your TEMPLATES setting in settings.py includes 'DIRS': [BASE_DIR / 'templates'] if you're planning to use a global templates directory.
+  POST	/api/medications/	Add a new medication
 
-🐞 Common Issues I Faced
-ModuleNotFoundError due to incorrect app naming or import paths
+  GET	/api/medications/expiring/?days=30	List medications expiring in the next 30 days
 
-TemplateDoesNotExist because the HTML file was in the wrong folder
+  PUT	/api/medications/{id}/	Update medication details
 
-OperationalError: no such table – forgot to run migrate
+  DELETE	/api/medications/{id}/	Delete a medication
+________________________________________
+# Deployment
 
-404 errors due to missing default route or wrong URL configuration
+Deployed on AWS EC2 with environment variables stored securely.
 
-🧠 Lessons Learnt
-Django is very structured — missing a step easily breaks things.
+The public subnet can act as a bastion host to allow ssh connection to the database securely
 
-Debugging takes time but helps solidify learning.
+The database hosted on a private subnet can connect to the internet via a NAT Gateway for updates and security but not vice-versa.
+________________________________________
+# Author
 
-Reading official documentation and trying examples out is key!
+Dosunmu Qudus
 
-💡 What's Next?
-Add forms and CRUD operations
+Cloud & DevOps Enthusiast | Pharmacist | Backend Developer
 
-Integrate user authentication
+•	LinkedIn
 
-Set up Docker for containerization
+•	GitHub
+________________________________________
+# License
 
-Deploy on a cloud service (e.g., AWS)
+This project is open-source and available under the MIT License.
 
-🤝 Contributing
-Feel free to fork this project and add your improvements. This is part of a beginner-friendly, open-source initiative to build in public and learn DevOps with a practical project.
 
-📬 Let's Connect
-If you're working on something similar or just learning Django, let’s connect!
 
-🔖 License
-This project is open source and available under the MIT License.
