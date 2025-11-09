@@ -13,6 +13,8 @@ from decouple import config
 
 from pathlib import Path
 
+import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -59,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'medication_expiry_tracker.middleware.AppPoolMiddleware',
 ]
 
 ROOT_URLCONF = 'medication_expiry_tracker.urls'
@@ -90,8 +93,12 @@ DATABASES = {
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST', default='localhost'),   
-        'PORT': config('DB_PORT', default='3306'),       
+        'HOST': config('DB_HOST', default='db'),   
+        'PORT': config('DB_PORT', default='3306'),
+        'OPTIONS': {
+            'ssl': {'disabled': True},
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        },
     }
 }
 
